@@ -113,17 +113,17 @@ function onPlayerStateChange(event) {
       player.seekTo(0);
       player.playVideo();
     } else {
-      document.getElementById('play-pause').textContent = '▶';
+      document.getElementById('play-pause').textContent = '▶ 재생';
     }
   }
   if (event.data === YT.PlayerState.PLAYING) {
-    document.getElementById('play-pause').textContent = '⏸';
+    document.getElementById('play-pause').textContent = '⏸ 일시정지';
     document.getElementById('play-pause').disabled = false;
     document.getElementById('stop').disabled = false;
     startProgressTimer();
   }
   if (event.data === YT.PlayerState.PAUSED) {
-    document.getElementById('play-pause').textContent = '▶';
+    document.getElementById('play-pause').textContent = '▶ 재생';
   }
 }
 
@@ -344,6 +344,8 @@ function updateFavTab() {
 function setupTabs() {
   const tabs = document.querySelectorAll('.tab');
   const contents = document.querySelectorAll('.tab-content');
+  const playerPanel = document.getElementById('player-panel');
+  const notepadPanel = document.getElementById('notepad-panel');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -351,6 +353,15 @@ function setupTabs() {
       contents.forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+
+      // 메모장 탭이면 우측에 메모장 에디터 표시, 아니면 플레이어 표시
+      if (tab.dataset.tab === 'notes') {
+        playerPanel.style.display = 'none';
+        notepadPanel.classList.add('active');
+      } else {
+        playerPanel.style.display = '';
+        notepadPanel.classList.remove('active');
+      }
     });
   });
 
@@ -373,7 +384,7 @@ function setupControls() {
     if (!player) return;
     player.stopVideo();
     clearInterval(progressTimer);
-    document.getElementById('play-pause').textContent = '⏸';
+    document.getElementById('play-pause').textContent = '⏸ 일시정지';
     document.getElementById('play-pause').disabled = true;
     document.getElementById('stop').disabled = true;
     document.getElementById('progress').value = 0;
@@ -434,6 +445,7 @@ function loadMemo(hymnNumber) {
 
 // ===== 메모장 =====
 function setupNotes() {
+  // 좌측 목록 버튼
   document.getElementById('new-note').addEventListener('click', () => {
     const note = {
       title: '새 메모',
@@ -456,13 +468,51 @@ function setupNotes() {
     clearNoteEditor();
   });
 
-  document.getElementById('save-note').addEventListener('click', () => {
+  // 우측 메모장 저장
+  document.getElementById('notepad-save').addEventListener('click', () => {
     if (currentNoteIndex < 0 || currentNoteIndex >= notes.length) return;
-    notes[currentNoteIndex].title = document.getElementById('note-title').value.trim() || '제목 없음';
-    notes[currentNoteIndex].content = document.getElementById('note-content').value;
+    notes[currentNoteIndex].title = document.getElementById('notepad-title').value.trim() || '제목 없음';
+    notes[currentNoteIndex].content = document.getElementById('notepad-editor').innerHTML;
     notes[currentNoteIndex].date = new Date().toISOString();
     saveNotes();
     renderNotesList();
+    const status = document.getElementById('notepad-status');
+    status.textContent = '✓ 저장됨';
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  });
+
+  // 서식 도구모음
+  document.getElementById('notepad-bold').addEventListener('click', () => {
+    document.execCommand('bold');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-italic').addEventListener('click', () => {
+    document.execCommand('italic');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-underline').addEventListener('click', () => {
+    document.execCommand('underline');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-fontsize').addEventListener('change', function () {
+    document.execCommand('fontSize', false, this.value);
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-left').addEventListener('click', () => {
+    document.execCommand('justifyLeft');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-center').addEventListener('click', () => {
+    document.execCommand('justifyCenter');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-right').addEventListener('click', () => {
+    document.execCommand('justifyRight');
+    document.getElementById('notepad-editor').focus();
+  });
+  document.getElementById('notepad-ul').addEventListener('click', () => {
+    document.execCommand('insertUnorderedList');
+    document.getElementById('notepad-editor').focus();
   });
 
   renderNotesList();
@@ -474,6 +524,7 @@ function renderNotesList() {
 
   if (notes.length === 0) {
     ul.innerHTML = '<div class="notes-empty">메모가 없습니다.<br>"+ 새 메모"를 눌러 추가하세요.</div>';
+    clearNoteEditor();
     return;
   }
 
@@ -483,10 +534,9 @@ function renderNotesList() {
     const text = document.createElement('span');
     text.style.flex = '1';
     text.style.cursor = 'pointer';
-    const dateStr = new Date(note.date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
-    text.textContent = `${note.title}`;
+    text.textContent = note.title;
     const dateSpan = document.createElement('span');
-    dateSpan.textContent = dateStr;
+    dateSpan.textContent = new Date(note.date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
     dateSpan.style.fontSize = '11px';
     dateSpan.style.opacity = '0.5';
     text.addEventListener('click', () => selectNote(i));
@@ -499,14 +549,14 @@ function renderNotesList() {
 function selectNote(index) {
   if (index < 0 || index >= notes.length) return;
   currentNoteIndex = index;
-  document.getElementById('note-title').value = notes[index].title;
-  document.getElementById('note-content').value = notes[index].content;
+  document.getElementById('notepad-title').value = notes[index].title;
+  document.getElementById('notepad-editor').innerHTML = notes[index].content;
   renderNotesList();
 }
 
 function clearNoteEditor() {
-  document.getElementById('note-title').value = '';
-  document.getElementById('note-content').value = '';
+  document.getElementById('notepad-title').value = '';
+  document.getElementById('notepad-editor').innerHTML = '';
 }
 
 function saveNotes() {

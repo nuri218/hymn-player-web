@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>찬송가 플레이어</title>
+  <title>Hymn Player</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>찬송가 플레이어</h1>
+    <h1>hymn player</h1>
     <div class="zoom-controls">
       <button id="zoom-out">－</button>
       <span id="zoom-level">100%</span>
@@ -17,25 +17,25 @@
   </header>
 
   <main>
-    <!-- 우측: 플레이어 -->
-    <section class="player-panel">
+    <!-- 우측: 플레이어 / 메모장 -->
+    <section class="player-panel" id="player-panel">
       <div class="youtube-wrapper">
         <div id="youtube-player"></div>
       </div>
-      <div class="player-controls-group">
-        <div class="control-row">
-          <span id="current-time">0:00</span>
-          <input type="range" id="progress" min="0" max="100" value="0">
-          <span id="total-time">0:00</span>
-          <button class="control-btn" id="play-pause" disabled>⏸</button>
-          <button class="control-btn" id="stop" disabled>⏹</button>
-        </div>
-        <div class="control-row">
-          <span>🔊</span>
-          <input type="range" id="volume" min="0" max="100" value="100">
-          <span id="volume-value">100%</span>
-          <button class="control-btn" id="loop">🔁</button>
-        </div>
+      <div class="progress-bar">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" min="0" max="100" value="0">
+        <span id="total-time">0:00</span>
+      </div>
+      <div class="volume-bar">
+        <span>🔊</span>
+        <input type="range" id="volume" min="0" max="100" value="100">
+        <span id="volume-value">100%</span>
+      </div>
+      <div class="playback-controls">
+        <button id="play-pause" disabled>⏸ 일시정지</button>
+        <button id="stop" disabled>⏹ 정지</button>
+        <button id="loop">🔁 반복재생</button>
       </div>
 
       <!-- 찬송가별 메모 -->
@@ -45,6 +45,35 @@
           <span id="memo-status"></span>
         </div>
         <textarea id="hymn-memo" placeholder="간주 포인트, 템포, 특이사항 등을 메모하세요..."></textarea>
+      </div>
+    </section>
+
+    <!-- 우측: 메모장 에디터 (메모장 탭 활성화 시 표시) -->
+    <section class="notepad-panel" id="notepad-panel">
+      <div class="notepad-toolbar">
+        <button class="notepad-tool" id="notepad-bold" title="굵게"><b>B</b></button>
+        <button class="notepad-tool" id="notepad-italic" title="기울임"><i>I</i></button>
+        <button class="notepad-tool" id="notepad-underline" title="밑줄"><u>U</u></button>
+        <span class="notepad-divider"></span>
+        <select id="notepad-fontsize" title="글자 크기">
+          <option value="2">12px</option>
+          <option value="3" selected>14px</option>
+          <option value="4">18px</option>
+          <option value="5">24px</option>
+          <option value="6">32px</option>
+        </select>
+        <span class="notepad-divider"></span>
+        <button class="notepad-tool" id="notepad-left" title="왼쪽 정렬">≡</button>
+        <button class="notepad-tool" id="notepad-center" title="가운데 정렬">≡</button>
+        <button class="notepad-tool" id="notepad-right" title="오른쪽 정렬">≡</button>
+        <span class="notepad-divider"></span>
+        <button class="notepad-tool" id="notepad-ul" title="목록">•</button>
+      </div>
+      <input type="text" id="notepad-title" placeholder="제목을 입력하세요...">
+      <div class="notepad-editor" id="notepad-editor" contenteditable="true" placeholder="내용을 입력하세요..."></div>
+      <div class="notepad-footer">
+        <button class="notepad-save" id="notepad-save">저장</button>
+        <span id="notepad-status"></span>
       </div>
     </section>
 
@@ -80,7 +109,7 @@
         <div class="fav-empty" id="fav-empty">보관함이 비어있습니다.<br>곡 옆의 ☆를 눌러 추가하세요.</div>
       </div>
 
-      <!-- 메모장 탭 -->
+      <!-- 메모장 탭 (좌측: 메모 목록) -->
       <div class="tab-content" id="tab-notes">
         <div class="notes-panel">
           <div class="notes-toolbar">
@@ -88,11 +117,6 @@
             <button class="notes-btn notes-btn-danger" id="delete-note">삭제</button>
           </div>
           <ul class="hymn-list" id="notes-list"></ul>
-          <div class="notes-editor" id="notes-editor">
-            <input type="text" id="note-title" placeholder="제목을 입력하세요...">
-            <textarea id="note-content" placeholder="내용을 입력하세요...&#10;찬송가 번호, 설교 내용, 기도 제목 등을 자유롭게 작성할 수 있습니다."></textarea>
-            <button class="notes-save-btn" id="save-note">저장</button>
-          </div>
         </div>
       </div>
     </section>

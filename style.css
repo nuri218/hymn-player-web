@@ -46,10 +46,12 @@ header {
   align-items: center;
 }
 header h1 {
-  font-size: calc(16px * var(--font-scale));
-  font-weight: 600;
+  font-family: 'Cooper Black', 'Cooper Std', 'Rockwell', 'Georgia', serif;
+  font-size: calc(20px * var(--font-scale));
+  font-weight: 900;
   color: var(--text);
-  letter-spacing: -0.3px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
 }
 .zoom-controls {
   display: flex;
@@ -90,7 +92,7 @@ main {
   overflow: hidden;
 }
 
-/* ===== 좌측 사이드바 (Claude 다크 사이드바) ===== */
+/* ===== 좌측 사이드바 ===== */
 .list-panel {
   width: 340px;
   min-width: 300px;
@@ -291,15 +293,15 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 16px 24px;
+  padding: 24px 32px;
   overflow-y: auto;
-  gap: 10px;
+  gap: 16px;
   align-items: center;
 }
 
 .youtube-wrapper {
   width: 100%;
-  max-width: 800px;
+  max-width: 640px;
   aspect-ratio: 16/9;
   background: #1a1a1a;
   border-radius: var(--radius);
@@ -308,15 +310,15 @@ main {
 }
 #youtube-player { width: 100%; height: 100%; }
 
-/* 컨트롤 행 */
-.control-row {
+/* 진행바 / 볼륨바 */
+.progress-bar, .volume-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  max-width: 640px;
   width: 100%;
-  max-width: 800px;
 }
-.control-row input[type=range] {
+.progress-bar input[type=range], .volume-bar input[type=range] {
   flex: 1;
   height: 4px;
   -webkit-appearance: none;
@@ -326,10 +328,11 @@ main {
   outline: none;
   transition: background 0.15s;
 }
-.control-row input[type=range]:hover {
+.progress-bar input[type=range]:hover, .volume-bar input[type=range]:hover {
   background: #d0cbc5;
 }
-.control-row input[type=range]::-webkit-slider-thumb {
+.progress-bar input[type=range]::-webkit-slider-thumb,
+.volume-bar input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
@@ -340,55 +343,62 @@ main {
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
   transition: transform 0.12s;
 }
-.control-row input[type=range]::-webkit-slider-thumb:hover {
+.progress-bar input[type=range]::-webkit-slider-thumb:hover,
+.volume-bar input[type=range]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
 }
 #current-time, #total-time, #volume-value {
-  font-size: calc(11px * var(--font-scale));
-  min-width: 32px;
+  font-size: calc(12px * var(--font-scale));
+  min-width: 36px;
   color: var(--text-secondary);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
-/* 인라인 컨트롤 버튼 */
-.control-btn {
-  width: 32px;
-  height: 32px;
+/* 재생 버튼 */
+.playback-controls {
+  display: flex;
+  gap: 8px;
+  max-width: 640px;
+  width: 100%;
+}
+.playback-controls button {
+  flex: 1;
+  padding: 10px 16px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   background: var(--card);
-  font-size: 14px;
+  font-size: calc(13px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
   color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
+  box-shadow: var(--shadow-sm);
 }
-.control-btn:hover:not(:disabled) {
+.playback-controls button:hover:not(:disabled) {
   background: var(--accent-light);
   border-color: var(--accent);
   color: var(--accent);
 }
-.control-btn:disabled {
-  opacity: 0.3;
+.playback-controls button:disabled {
+  opacity: 0.35;
   cursor: default;
+  box-shadow: none;
 }
-.control-btn.loop-active {
+.playback-controls button.loop-active {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
+  box-shadow: 0 2px 6px rgba(201,100,66,0.25);
 }
-.control-btn.loop-active:hover {
+.playback-controls button.loop-active:hover {
   background: var(--accent-hover);
 }
 
-/* 메모 */
+/* 찬송가별 메모 */
 .hymn-memo {
-  max-width: 800px;
+  max-width: 640px;
   width: 100%;
 }
 .memo-header {
@@ -426,64 +436,146 @@ main {
 }
 #hymn-memo::placeholder { color: #b5b0aa; }
 
-/* ===== 모바일 (Claude 앱 스타일) ===== */
-@media (max-width: 768px) {
-  header {
-    padding: 10px 16px;
-    background: var(--bg-sidebar);
-    border-bottom: none;
-  }
-  header h1 {
-    color: #fff;
-    font-size: calc(15px * var(--font-scale));
-  }
-  .zoom-controls button {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.1);
-    color: var(--text-sidebar);
-  }
-  .zoom-controls button:hover {
-    background: rgba(255,255,255,0.15);
-  }
-  #zoom-level { color: var(--text-sidebar-dim); }
-
-  main {
-    flex-direction: column;
-    height: auto;
-    min-height: calc(100vh - 49px);
-    background: var(--bg);
-  }
-
-  .player-panel {
-    order: -1;
-    padding: 12px;
-    overflow: visible;
-    background: var(--bg);
-    gap: 8px;
-  }
-  .youtube-wrapper {
-    max-width: 100%;
-    border-radius: var(--radius-sm);
-  }
-
-  .list-panel {
-    width: 100%;
-    min-height: 50vh;
-    border-radius: var(--radius) var(--radius) 0 0;
-  }
-  .tabs { padding: 12px 12px 0; }
-}
-
-/* ===== 컨트롤 그룹 래퍼 ===== */
-.player-controls-group {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
+/* ===== 메모장 에디터 패널 (우측, 플레이어 대체) ===== */
+.notepad-panel {
+  flex: 1;
+  display: none;
   flex-direction: column;
-  gap: 6px;
+  padding: 16px 24px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.notepad-panel.active {
+  display: flex;
 }
 
-/* ===== 메모장 패널 ===== */
+.notepad-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.notepad-tool {
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.12s;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+}
+.notepad-tool:hover {
+  background: var(--accent-light);
+  border-color: var(--border);
+}
+.notepad-tool.active {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.notepad-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
+#notepad-fontsize {
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--card);
+  font-size: calc(12px * var(--font-scale));
+  font-family: inherit;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+}
+
+#notepad-title {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-top: none;
+  background: var(--card);
+  font-size: calc(16px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  flex-shrink: 0;
+}
+#notepad-title::placeholder { color: #b5b0aa; }
+#notepad-title:focus {
+  background: var(--input-bg);
+}
+
+.notepad-editor {
+  flex: 1;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-top: none;
+  background: var(--card);
+  font-size: calc(14px * var(--font-scale));
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  overflow-y: auto;
+  line-height: 1.7;
+  min-height: 200px;
+}
+.notepad-editor:empty::before {
+  content: attr(placeholder);
+  color: #b5b0aa;
+  pointer-events: none;
+}
+.notepad-editor:focus {
+  background: var(--input-bg);
+}
+
+.notepad-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  flex-shrink: 0;
+}
+.notepad-save {
+  padding: 8px 24px;
+  border: none;
+  border-radius: var(--radius-xs);
+  background: var(--accent);
+  color: #fff;
+  font-size: calc(13px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.notepad-save:hover {
+  background: var(--accent-hover);
+}
+#notepad-status {
+  font-size: calc(12px * var(--font-scale));
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ===== 좌측 메모장 목록 패널 ===== */
 .notes-panel {
   display: flex;
   flex-direction: column;
@@ -521,78 +613,10 @@ main {
   border-color: rgba(229,115,115,0.3);
 }
 
-#notes-list {
-  max-height: 35%;
-  overflow-y: auto;
-  flex-shrink: 0;
-}
 #notes-list .hymn-item.note-active {
   background: var(--bg-sidebar-active);
   color: #fff;
   font-weight: 500;
-}
-
-.notes-editor {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px 12px;
-  flex: 1;
-  min-height: 0;
-}
-#note-title {
-  padding: 9px 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-xs);
-  background: rgba(255,255,255,0.06);
-  font-size: calc(13px * var(--font-scale));
-  font-family: inherit;
-  font-weight: 500;
-  color: #fff;
-  outline: none;
-  flex-shrink: 0;
-  transition: all 0.15s;
-}
-#note-title::placeholder { color: var(--text-sidebar-dim); }
-#note-title:focus {
-  border-color: rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.1);
-}
-#note-content {
-  flex: 2;
-  min-height: 120px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-xs);
-  background: rgba(255,255,255,0.06);
-  font-size: calc(13px * var(--font-scale));
-  font-family: inherit;
-  color: var(--text-sidebar);
-  outline: none;
-  resize: none;
-  transition: all 0.15s;
-  line-height: 1.6;
-}
-#note-content::placeholder { color: var(--text-sidebar-dim); }
-#note-content:focus {
-  border-color: rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.1);
-}
-.notes-save-btn {
-  padding: 9px 16px;
-  border: none;
-  border-radius: var(--radius-xs);
-  background: var(--accent);
-  color: #fff;
-  font-size: calc(13px * var(--font-scale));
-  font-family: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  flex-shrink: 0;
-}
-.notes-save-btn:hover {
-  background: var(--accent-hover);
 }
 .notes-empty {
   text-align: center;
@@ -600,6 +624,63 @@ main {
   color: var(--text-sidebar-dim);
   font-size: calc(13px * var(--font-scale));
   line-height: 1.8;
+}
+
+/* ===== 모바일 ===== */
+@media (max-width: 768px) {
+  header {
+    padding: 10px 16px;
+    background: var(--bg-sidebar);
+    border-bottom: none;
+  }
+  header h1 {
+    color: #fff;
+    font-size: calc(17px * var(--font-scale));
+  }
+  .zoom-controls button {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.1);
+    color: var(--text-sidebar);
+  }
+  .zoom-controls button:hover {
+    background: rgba(255,255,255,0.15);
+  }
+  #zoom-level { color: var(--text-sidebar-dim); }
+
+  main {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 49px);
+    background: var(--bg);
+  }
+
+  .player-panel {
+    order: -1;
+    padding: 16px;
+    overflow: visible;
+    background: var(--bg);
+    gap: 12px;
+  }
+  .youtube-wrapper {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+  }
+  .playback-controls button {
+    padding: 10px 8px;
+    font-size: calc(12px * var(--font-scale));
+  }
+
+  .notepad-panel {
+    order: -1;
+    padding: 12px;
+  }
+
+  .list-panel {
+    width: 100%;
+    min-height: 50vh;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .tabs { padding: 12px 12px 0; }
 }
 
 /* ===== 모바일 가로모드 ===== */
@@ -612,26 +693,27 @@ main {
   .player-panel {
     order: 0;
     flex: 1;
-    padding: 6px 10px;
-    gap: 4px;
+    padding: 8px 12px;
+    gap: 6px;
     overflow-y: auto;
   }
   .youtube-wrapper {
-    max-width: 320px;
+    max-width: 300px;
   }
-  .player-controls-group {
-    gap: 4px;
+  .playback-controls button {
+    padding: 6px 8px;
+    font-size: calc(11px * var(--font-scale));
   }
-  .control-row {
-    gap: 4px;
-  }
-  .control-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
+  .progress-bar, .volume-bar {
+    gap: 6px;
   }
   .hymn-memo {
     display: none;
+  }
+
+  .notepad-panel {
+    order: 0;
+    padding: 8px;
   }
 
   .list-panel {
@@ -667,7 +749,7 @@ main {
   }
 }
 
-/* ===== 스크롤바 (메인) ===== */
+/* ===== 스크롤바 ===== */
 .player-panel::-webkit-scrollbar { width: 6px; }
 .player-panel::-webkit-scrollbar-track { background: transparent; }
 .player-panel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 3px; }
