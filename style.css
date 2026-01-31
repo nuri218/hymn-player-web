@@ -835,6 +835,9 @@ main {
   .player-panel {
     padding: 16px 20px;
   }
+  .volume-bar {
+    display: none !important;
+  }
 }
 
 /* ===== 스크롤바 ===== */
