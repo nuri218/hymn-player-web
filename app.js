@@ -584,22 +584,6 @@ function applyFontScale() {
   if (label) label.textContent = Math.round(fontScale * 100) + '%';
 }
 
-// ===== 사이드바 토글 =====
-let sidebarCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
-
-function applySidebar() {
-  const panel = document.getElementById('list-panel');
-  const openBtn = document.getElementById('sidebar-open');
-  if (sidebarCollapsed) {
-    panel.classList.add('collapsed');
-    openBtn.classList.add('visible');
-  } else {
-    panel.classList.remove('collapsed');
-    openBtn.classList.remove('visible');
-  }
-  localStorage.setItem('sidebar_collapsed', sidebarCollapsed);
-}
-
 // ===== UI 이벤트 바인딩 =====
 function setupUI() {
   // 다크모드 토글
@@ -622,17 +606,6 @@ function setupUI() {
     localStorage.setItem('font_scale', fontScale);
     applyFontScale();
   });
-
-  // 사이드바 토글
-  document.getElementById('sidebar-close').addEventListener('click', () => {
-    sidebarCollapsed = true;
-    applySidebar();
-  });
-  document.getElementById('sidebar-open').addEventListener('click', () => {
-    sidebarCollapsed = false;
-    applySidebar();
-  });
-  applySidebar();
 }
 
 // ===== 실행 =====
