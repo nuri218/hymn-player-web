@@ -181,6 +181,7 @@ main {
   flex-direction: column;
   background: var(--bg-sidebar);
   color: var(--text-sidebar);
+  overflow: hidden;
 }
 
 /* 탭 */
