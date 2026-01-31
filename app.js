@@ -564,7 +564,8 @@ function saveNotes() {
 }
 
 // ===== 다크모드 =====
-let isDark = localStorage.getItem('hymn_theme') === 'dark';
+const savedTheme = localStorage.getItem('hymn_theme');
+let isDark = savedTheme === null ? true : savedTheme === 'dark';
 
 function applyTheme() {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');

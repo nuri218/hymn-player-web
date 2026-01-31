@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,11 @@
 </head>
 <body>
   <header>
-    <h1>hymn player</h1>
+    <div class="header-title">
+      <h1>hymn player</h1>
+      <button id="theme-toggle" title="다크/라이트 전환">☀️</button>
+    </div>
     <div class="header-controls">
-      <button id="theme-toggle" title="다크/라이트 전환">🌙</button>
       <div class="zoom-controls">
         <button id="zoom-out">－</button>
         <span id="zoom-level">100%</span>

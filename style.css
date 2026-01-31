@@ -88,6 +88,11 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 header h1 {
   font-family: 'Cooper Black', 'Cooper Std', 'Rockwell', 'Georgia', serif;
   font-size: calc(20px * var(--font-scale));
@@ -96,29 +101,30 @@ header h1 {
   letter-spacing: 0.5px;
   text-transform: lowercase;
 }
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 #theme-toggle {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border: 1px solid var(--border);
   border-radius: var(--radius-xs);
   background: var(--card);
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   transition: all 0.15s;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
+  flex-shrink: 0;
 }
 #theme-toggle:hover {
   background: var(--bg);
   border-color: #ccc;
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .zoom-controls {
   display: flex;
@@ -699,8 +705,12 @@ main {
     color: #fff;
     font-size: calc(17px * var(--font-scale));
   }
-  #theme-toggle,
   .zoom-controls button {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.1);
+    color: var(--text-sidebar);
+  }
+  #theme-toggle {
     background: rgba(255,255,255,0.08);
     border-color: rgba(255,255,255,0.1);
     color: var(--text-sidebar);
