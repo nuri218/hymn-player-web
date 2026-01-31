@@ -396,6 +396,10 @@ main {
   gap: 10px;
   width: 100%;
 }
+/* 볼륨바: PC(1025px 이상)에서만 표시 */
+@media (max-width: 1024px) {
+  .volume-bar { display: none !important; }
+}
 .progress-bar input[type=range], .volume-bar input[type=range] {
   flex: 1;
   height: 4px;
@@ -747,9 +751,6 @@ main {
     max-width: 100%;
     border-radius: var(--radius-sm);
   }
-  .volume-bar {
-    display: none !important;
-  }
   .playback-controls button {
     padding: 10px 8px;
     font-size: calc(12px * var(--font-scale));
@@ -792,9 +793,6 @@ main {
   .progress-bar {
     gap: 6px;
   }
-  .volume-bar {
-    display: none !important;
-  }
   .hymn-memo {
     display: none;
   }
@@ -834,9 +832,6 @@ main {
   }
   .player-panel {
     padding: 16px 20px;
-  }
-  .volume-bar {
-    display: none !important;
   }
 }
 
