@@ -27,6 +27,49 @@
   --radius-xs: 6px;
 }
 
+/* 다크모드 (Claude Dark 기반) */
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --bg-sidebar: #171717;
+  --bg-sidebar-hover: #252525;
+  --bg-sidebar-active: #303030;
+  --card: #232323;
+  --text: #e8e4e0;
+  --text-secondary: #9b9590;
+  --text-sidebar: #d4d0cc;
+  --text-sidebar-dim: #706c68;
+  --border: #353535;
+  --accent: #d4845a;
+  --accent-hover: #e09570;
+  --accent-light: #2e2420;
+  --accent-subtle: #352a24;
+  --playing-bg: #2a2520;
+  --input-bg: #1e1e1e;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] #hymn-memo::placeholder,
+[data-theme="dark"] #notepad-title::placeholder,
+[data-theme="dark"] .notepad-editor:empty::before {
+  color: #605c58;
+}
+[data-theme="dark"] .progress-bar input[type=range],
+[data-theme="dark"] .volume-bar input[type=range] {
+  background: #404040;
+}
+[data-theme="dark"] .progress-bar input[type=range]:hover,
+[data-theme="dark"] .volume-bar input[type=range]:hover {
+  background: #505050;
+}
+[data-theme="dark"] .player-panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+}
+[data-theme="dark"] #theme-toggle:hover,
+[data-theme="dark"] .zoom-controls button:hover {
+  background: var(--bg-sidebar-hover);
+  border-color: var(--border);
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
   background: var(--bg);
@@ -52,6 +95,30 @@ header h1 {
   color: var(--text);
   letter-spacing: 0.5px;
   text-transform: lowercase;
+}
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--card);
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+#theme-toggle:hover {
+  background: var(--bg);
+  border-color: #ccc;
 }
 .zoom-controls {
   display: flex;
@@ -632,11 +699,13 @@ main {
     color: #fff;
     font-size: calc(17px * var(--font-scale));
   }
+  #theme-toggle,
   .zoom-controls button {
     background: rgba(255,255,255,0.08);
     border-color: rgba(255,255,255,0.1);
     color: var(--text-sidebar);
   }
+  #theme-toggle:hover,
   .zoom-controls button:hover {
     background: rgba(255,255,255,0.15);
   }

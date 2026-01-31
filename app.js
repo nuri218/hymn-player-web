@@ -563,6 +563,22 @@ function saveNotes() {
   localStorage.setItem('hymn_notebook', JSON.stringify(notes));
 }
 
+// ===== 다크모드 =====
+let isDark = localStorage.getItem('hymn_theme') === 'dark';
+
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('hymn_theme', isDark ? 'dark' : 'light');
+}
+
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  isDark = !isDark;
+  applyTheme();
+});
+
+applyTheme();
+
 // ===== 글자 크기 =====
 function applyFontScale() {
   document.documentElement.style.setProperty('--font-scale', fontScale);
