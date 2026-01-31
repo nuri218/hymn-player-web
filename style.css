@@ -286,36 +286,20 @@ main {
 }
 .theme-hymn-item:hover { background: var(--bg-sidebar-hover); }
 
-/* ===== 우측 플레이어 패널 (Claude 메인 콘텐츠) ===== */
+/* ===== 우측 플레이어 패널 ===== */
 .player-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 24px 32px;
-  overflow-y: auto;
-  gap: 16px;
-  align-items: center;
-}
-
-.now-playing {
-  font-size: calc(18px * var(--font-scale));
-  font-weight: 600;
-  text-align: center;
   padding: 16px 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  min-height: 40px;
-  width: 100%;
-  max-width: 640px;
-  box-shadow: var(--shadow-sm);
-  letter-spacing: -0.3px;
-  color: var(--text);
+  overflow-y: auto;
+  gap: 10px;
+  align-items: center;
 }
 
 .youtube-wrapper {
   width: 100%;
-  max-width: 640px;
+  max-width: 800px;
   aspect-ratio: 16/9;
   background: #1a1a1a;
   border-radius: var(--radius);
@@ -324,15 +308,15 @@ main {
 }
 #youtube-player { width: 100%; height: 100%; }
 
-/* 진행바 */
-.progress-bar, .volume-bar {
+/* 컨트롤 행 */
+.control-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  max-width: 640px;
+  gap: 8px;
   width: 100%;
+  max-width: 800px;
 }
-.progress-bar input[type=range], .volume-bar input[type=range] {
+.control-row input[type=range] {
   flex: 1;
   height: 4px;
   -webkit-appearance: none;
@@ -342,11 +326,10 @@ main {
   outline: none;
   transition: background 0.15s;
 }
-.progress-bar input[type=range]:hover, .volume-bar input[type=range]:hover {
+.control-row input[type=range]:hover {
   background: #d0cbc5;
 }
-.progress-bar input[type=range]::-webkit-slider-thumb,
-.volume-bar input[type=range]::-webkit-slider-thumb {
+.control-row input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
@@ -357,62 +340,55 @@ main {
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
   transition: transform 0.12s;
 }
-.progress-bar input[type=range]::-webkit-slider-thumb:hover,
-.volume-bar input[type=range]::-webkit-slider-thumb:hover {
+.control-row input[type=range]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
 }
 #current-time, #total-time, #volume-value {
-  font-size: calc(12px * var(--font-scale));
-  min-width: 36px;
+  font-size: calc(11px * var(--font-scale));
+  min-width: 32px;
   color: var(--text-secondary);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
-/* 재생 버튼 */
-.playback-controls {
-  display: flex;
-  gap: 8px;
-  max-width: 640px;
-  width: 100%;
-}
-.playback-controls button {
-  flex: 1;
-  padding: 10px 16px;
+/* 인라인 컨트롤 버튼 */
+.control-btn {
+  width: 32px;
+  height: 32px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xs);
   background: var(--card);
-  font-size: calc(13px * var(--font-scale));
-  font-family: inherit;
-  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.15s;
   color: var(--text);
-  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
 }
-.playback-controls button:hover:not(:disabled) {
+.control-btn:hover:not(:disabled) {
   background: var(--accent-light);
   border-color: var(--accent);
   color: var(--accent);
 }
-.playback-controls button:disabled {
-  opacity: 0.35;
+.control-btn:disabled {
+  opacity: 0.3;
   cursor: default;
-  box-shadow: none;
 }
-.playback-controls button.loop-active {
+.control-btn.loop-active {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
-  box-shadow: 0 2px 6px rgba(201,100,66,0.25);
 }
-.playback-controls button.loop-active:hover {
+.control-btn.loop-active:hover {
   background: var(--accent-hover);
 }
 
 /* 메모 */
 .hymn-memo {
-  max-width: 640px;
+  max-width: 800px;
   width: 100%;
 }
 .memo-header {
@@ -480,25 +456,14 @@ main {
 
   .player-panel {
     order: -1;
-    padding: 16px;
+    padding: 12px;
     overflow: visible;
     background: var(--bg);
-    gap: 12px;
-  }
-  .now-playing {
-    font-size: calc(15px * var(--font-scale));
-    padding: 12px 16px;
-    border: none;
-    background: var(--card);
-    box-shadow: var(--shadow-sm);
+    gap: 8px;
   }
   .youtube-wrapper {
     max-width: 100%;
     border-radius: var(--radius-sm);
-  }
-  .playback-controls button {
-    padding: 10px 8px;
-    font-size: calc(12px * var(--font-scale));
   }
 
   .list-panel {
@@ -512,10 +477,10 @@ main {
 /* ===== 컨트롤 그룹 래퍼 ===== */
 .player-controls-group {
   width: 100%;
-  max-width: 640px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
 /* ===== 메모장 패널 ===== */
@@ -557,7 +522,7 @@ main {
 }
 
 #notes-list {
-  max-height: 180px;
+  max-height: 35%;
   overflow-y: auto;
   flex-shrink: 0;
 }
@@ -594,8 +559,8 @@ main {
   background: rgba(255,255,255,0.1);
 }
 #note-content {
-  flex: 1;
-  min-height: 100px;
+  flex: 2;
+  min-height: 120px;
   padding: 10px 12px;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-xs);
@@ -637,7 +602,7 @@ main {
   line-height: 1.8;
 }
 
-/* ===== 모바일 가로모드 (핵심 수정) ===== */
+/* ===== 모바일 가로모드 ===== */
 @media (max-width: 900px) and (orientation: landscape) {
   main {
     flex-direction: row-reverse;
@@ -647,27 +612,23 @@ main {
   .player-panel {
     order: 0;
     flex: 1;
-    padding: 8px 12px;
-    gap: 6px;
+    padding: 6px 10px;
+    gap: 4px;
     overflow-y: auto;
   }
-  .now-playing {
-    font-size: calc(13px * var(--font-scale));
-    padding: 6px 12px;
-    min-height: auto;
-  }
   .youtube-wrapper {
-    max-width: 300px;
+    max-width: 320px;
   }
   .player-controls-group {
-    gap: 6px;
+    gap: 4px;
   }
-  .playback-controls button {
-    padding: 6px 8px;
-    font-size: calc(11px * var(--font-scale));
+  .control-row {
+    gap: 4px;
   }
-  .progress-bar, .volume-bar {
-    gap: 6px;
+  .control-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
   .hymn-memo {
     display: none;

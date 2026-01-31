@@ -113,17 +113,17 @@ function onPlayerStateChange(event) {
       player.seekTo(0);
       player.playVideo();
     } else {
-      document.getElementById('play-pause').textContent = '▶ 재생';
+      document.getElementById('play-pause').textContent = '▶';
     }
   }
   if (event.data === YT.PlayerState.PLAYING) {
-    document.getElementById('play-pause').textContent = '⏸ 일시정지';
+    document.getElementById('play-pause').textContent = '⏸';
     document.getElementById('play-pause').disabled = false;
     document.getElementById('stop').disabled = false;
     startProgressTimer();
   }
   if (event.data === YT.PlayerState.PAUSED) {
-    document.getElementById('play-pause').textContent = '▶ 재생';
+    document.getElementById('play-pause').textContent = '▶';
   }
 }
 
@@ -154,8 +154,6 @@ function playHymn(hymn) {
   currentHymn = hymn;
   player.loadVideoById(hymn.vid);
 
-  const label = hymn.n ? `${hymn.n}장 - ${hymn.name}` : hymn.name;
-  document.getElementById('now-playing').textContent = label;
   document.getElementById('play-pause').disabled = false;
   document.getElementById('stop').disabled = false;
 
@@ -375,13 +373,12 @@ function setupControls() {
     if (!player) return;
     player.stopVideo();
     clearInterval(progressTimer);
-    document.getElementById('play-pause').textContent = '⏸ 일시정지';
+    document.getElementById('play-pause').textContent = '⏸';
     document.getElementById('play-pause').disabled = true;
     document.getElementById('stop').disabled = true;
     document.getElementById('progress').value = 0;
     document.getElementById('current-time').textContent = '0:00';
     document.getElementById('total-time').textContent = '0:00';
-    document.getElementById('now-playing').textContent = '재생할 찬송가를 선택하세요';
     currentHymn = null;
     document.querySelectorAll('.hymn-item.playing, .theme-hymn-item.playing').forEach(el => el.classList.remove('playing'));
     loadMemo(null);
