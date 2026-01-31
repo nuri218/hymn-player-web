@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>찬송가 플레이어</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>찬송가 플레이어</h1>
+    <div class="zoom-controls">
+      <button id="zoom-out">－</button>
+      <span id="zoom-level">100%</span>
+      <button id="zoom-in">＋</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 우측: 플레이어 -->
+    <section class="player-panel">
+      <div class="now-playing" id="now-playing">재생할 찬송가를 선택하세요</div>
+      <div class="youtube-wrapper">
+        <div id="youtube-player"></div>
+      </div>
+      <div class="progress-bar">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" min="0" max="100" value="0">
+        <span id="total-time">0:00</span>
+      </div>
+      <div class="volume-bar">
+        <span>🔊</span>
+        <input type="range" id="volume" min="0" max="100" value="70">
+        <span id="volume-value">70%</span>
+      </div>
+      <div class="playback-controls">
+        <button id="play-pause" disabled>⏸ 일시정지</button>
+        <button id="stop" disabled>⏹ 정지</button>
+        <button id="loop">🔁 반복재생</button>
+      </div>
+
+      <!-- 찬송가별 메모 -->
+      <div class="hymn-memo">
+        <div class="memo-header">
+          <span>메모</span>
+          <span id="memo-status"></span>
+        </div>
+        <textarea id="hymn-memo" placeholder="간주 포인트, 템포, 특이사항 등을 메모하세요..."></textarea>
+      </div>
+    </section>
+
+    <!-- 좌측: 목록 -->
+    <section class="list-panel">
+      <div class="tabs">
+        <button class="tab active" data-tab="all">전체</button>
+        <button class="tab" data-tab="theme">주제별</button>
+        <button class="tab" data-tab="prayer">기도찬양</button>
+        <button class="tab" data-tab="fav">보관함 (0)</button>
+      </div>
+
+      <!-- 전체 탭 -->
+      <div class="tab-content active" id="tab-all">
+        <input type="text" id="search" placeholder="장수 또는 곡명 검색...">
+        <ul class="hymn-list" id="all-list"></ul>
+      </div>
+
+      <!-- 주제별 탭 -->
+      <div class="tab-content" id="tab-theme">
+        <div class="theme-tree" id="theme-tree"></div>
+      </div>
+
+      <!-- 기도찬양 탭 -->
+      <div class="tab-content" id="tab-prayer">
+        <ul class="hymn-list" id="prayer-list"></ul>
+      </div>
+
+      <!-- 보관함 탭 -->
+      <div class="tab-content" id="tab-fav">
+        <ul class="hymn-list" id="fav-list"></ul>
+        <div class="fav-empty" id="fav-empty">보관함이 비어있습니다.<br>곡 옆의 ☆를 눌러 추가하세요.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
