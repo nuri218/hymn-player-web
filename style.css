@@ -509,6 +509,203 @@ main {
   .tabs { padding: 12px 12px 0; }
 }
 
+/* ===== 컨트롤 그룹 래퍼 ===== */
+.player-controls-group {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 메모장 패널 ===== */
+.notes-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+.notes-toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+.notes-btn {
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-xs);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-sidebar);
+  font-size: calc(12px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.notes-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+.notes-btn-danger {
+  color: #e57373;
+  border-color: rgba(229,115,115,0.2);
+}
+.notes-btn-danger:hover {
+  background: rgba(229,115,115,0.12);
+  border-color: rgba(229,115,115,0.3);
+}
+
+#notes-list {
+  max-height: 180px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+#notes-list .hymn-item.note-active {
+  background: var(--bg-sidebar-active);
+  color: #fff;
+  font-weight: 500;
+}
+
+.notes-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 12px;
+  flex: 1;
+  min-height: 0;
+}
+#note-title {
+  padding: 9px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xs);
+  background: rgba(255,255,255,0.06);
+  font-size: calc(13px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 500;
+  color: #fff;
+  outline: none;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+#note-title::placeholder { color: var(--text-sidebar-dim); }
+#note-title:focus {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+}
+#note-content {
+  flex: 1;
+  min-height: 100px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xs);
+  background: rgba(255,255,255,0.06);
+  font-size: calc(13px * var(--font-scale));
+  font-family: inherit;
+  color: var(--text-sidebar);
+  outline: none;
+  resize: none;
+  transition: all 0.15s;
+  line-height: 1.6;
+}
+#note-content::placeholder { color: var(--text-sidebar-dim); }
+#note-content:focus {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+}
+.notes-save-btn {
+  padding: 9px 16px;
+  border: none;
+  border-radius: var(--radius-xs);
+  background: var(--accent);
+  color: #fff;
+  font-size: calc(13px * var(--font-scale));
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.notes-save-btn:hover {
+  background: var(--accent-hover);
+}
+.notes-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-sidebar-dim);
+  font-size: calc(13px * var(--font-scale));
+  line-height: 1.8;
+}
+
+/* ===== 모바일 가로모드 (핵심 수정) ===== */
+@media (max-width: 900px) and (orientation: landscape) {
+  main {
+    flex-direction: row-reverse;
+    height: calc(100vh - 49px);
+    overflow: hidden;
+  }
+  .player-panel {
+    order: 0;
+    flex: 1;
+    padding: 8px 12px;
+    gap: 6px;
+    overflow-y: auto;
+  }
+  .now-playing {
+    font-size: calc(13px * var(--font-scale));
+    padding: 6px 12px;
+    min-height: auto;
+  }
+  .youtube-wrapper {
+    max-width: 300px;
+  }
+  .player-controls-group {
+    gap: 6px;
+  }
+  .playback-controls button {
+    padding: 6px 8px;
+    font-size: calc(11px * var(--font-scale));
+  }
+  .progress-bar, .volume-bar {
+    gap: 6px;
+  }
+  .hymn-memo {
+    display: none;
+  }
+
+  .list-panel {
+    width: 220px;
+    min-width: 200px;
+    min-height: auto;
+    border-radius: 0;
+  }
+  .tabs { padding: 6px 6px 0; }
+  .tab {
+    padding: 6px 2px;
+    font-size: calc(10px * var(--font-scale));
+  }
+  #search {
+    margin: 4px 8px;
+    padding: 6px 10px;
+    font-size: calc(11px * var(--font-scale));
+  }
+  .hymn-item {
+    padding: 6px 8px;
+    font-size: calc(11px * var(--font-scale));
+  }
+}
+
+/* ===== 태블릿 ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .list-panel {
+    width: 280px;
+    min-width: 260px;
+  }
+  .player-panel {
+    padding: 16px 20px;
+  }
+}
+
 /* ===== 스크롤바 (메인) ===== */
 .player-panel::-webkit-scrollbar { width: 6px; }
 .player-panel::-webkit-scrollbar-track { background: transparent; }

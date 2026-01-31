@@ -7,6 +7,8 @@ let player = null;
 let isLoopEnabled = false;
 let fontScale = parseFloat(localStorage.getItem('font_scale') || '1');
 let progressTimer = null;
+let notes = JSON.parse(localStorage.getItem('hymn_notebook') || '[]');
+let currentNoteIndex = -1;
 
 // 기도찬양 데이터
 const prayerMusic = [
@@ -72,6 +74,7 @@ async function init() {
   setupSearch();
   setupControls();
   setupMemo();
+  setupNotes();
   loadYouTubeAPI();
 }
 
@@ -430,6 +433,87 @@ function loadMemo(hymnNumber) {
     textarea.value = '';
   }
   status.textContent = '';
+}
+
+// ===== 메모장 =====
+function setupNotes() {
+  document.getElementById('new-note').addEventListener('click', () => {
+    const note = {
+      title: '새 메모',
+      content: '',
+      date: new Date().toISOString()
+    };
+    notes.unshift(note);
+    saveNotes();
+    renderNotesList();
+    selectNote(0);
+  });
+
+  document.getElementById('delete-note').addEventListener('click', () => {
+    if (currentNoteIndex < 0 || currentNoteIndex >= notes.length) return;
+    if (!confirm('이 메모를 삭제하시겠습니까?')) return;
+    notes.splice(currentNoteIndex, 1);
+    currentNoteIndex = -1;
+    saveNotes();
+    renderNotesList();
+    clearNoteEditor();
+  });
+
+  document.getElementById('save-note').addEventListener('click', () => {
+    if (currentNoteIndex < 0 || currentNoteIndex >= notes.length) return;
+    notes[currentNoteIndex].title = document.getElementById('note-title').value.trim() || '제목 없음';
+    notes[currentNoteIndex].content = document.getElementById('note-content').value;
+    notes[currentNoteIndex].date = new Date().toISOString();
+    saveNotes();
+    renderNotesList();
+  });
+
+  renderNotesList();
+}
+
+function renderNotesList() {
+  const ul = document.getElementById('notes-list');
+  ul.innerHTML = '';
+
+  if (notes.length === 0) {
+    ul.innerHTML = '<div class="notes-empty">메모가 없습니다.<br>"+ 새 메모"를 눌러 추가하세요.</div>';
+    return;
+  }
+
+  notes.forEach((note, i) => {
+    const li = document.createElement('li');
+    li.className = 'hymn-item' + (i === currentNoteIndex ? ' note-active' : '');
+    const text = document.createElement('span');
+    text.style.flex = '1';
+    text.style.cursor = 'pointer';
+    const dateStr = new Date(note.date).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
+    text.textContent = `${note.title}`;
+    const dateSpan = document.createElement('span');
+    dateSpan.textContent = dateStr;
+    dateSpan.style.fontSize = '11px';
+    dateSpan.style.opacity = '0.5';
+    text.addEventListener('click', () => selectNote(i));
+    li.appendChild(text);
+    li.appendChild(dateSpan);
+    ul.appendChild(li);
+  });
+}
+
+function selectNote(index) {
+  if (index < 0 || index >= notes.length) return;
+  currentNoteIndex = index;
+  document.getElementById('note-title').value = notes[index].title;
+  document.getElementById('note-content').value = notes[index].content;
+  renderNotesList();
+}
+
+function clearNoteEditor() {
+  document.getElementById('note-title').value = '';
+  document.getElementById('note-content').value = '';
+}
+
+function saveNotes() {
+  localStorage.setItem('hymn_notebook', JSON.stringify(notes));
 }
 
 // ===== 글자 크기 =====

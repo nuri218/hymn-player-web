@@ -23,20 +23,22 @@
       <div class="youtube-wrapper">
         <div id="youtube-player"></div>
       </div>
-      <div class="progress-bar">
-        <span id="current-time">0:00</span>
-        <input type="range" id="progress" min="0" max="100" value="0">
-        <span id="total-time">0:00</span>
-      </div>
-      <div class="volume-bar">
-        <span>🔊</span>
-        <input type="range" id="volume" min="0" max="100" value="70">
-        <span id="volume-value">70%</span>
-      </div>
-      <div class="playback-controls">
-        <button id="play-pause" disabled>⏸ 일시정지</button>
-        <button id="stop" disabled>⏹ 정지</button>
-        <button id="loop">🔁 반복재생</button>
+      <div class="player-controls-group">
+        <div class="progress-bar">
+          <span id="current-time">0:00</span>
+          <input type="range" id="progress" min="0" max="100" value="0">
+          <span id="total-time">0:00</span>
+        </div>
+        <div class="volume-bar">
+          <span>🔊</span>
+          <input type="range" id="volume" min="0" max="100" value="70">
+          <span id="volume-value">70%</span>
+        </div>
+        <div class="playback-controls">
+          <button id="play-pause" disabled>⏸ 일시정지</button>
+          <button id="stop" disabled>⏹ 정지</button>
+          <button id="loop">🔁 반복재생</button>
+        </div>
       </div>
 
       <!-- 찬송가별 메모 -->
@@ -56,6 +58,7 @@
         <button class="tab" data-tab="theme">주제별</button>
         <button class="tab" data-tab="prayer">기도찬양</button>
         <button class="tab" data-tab="fav">보관함 (0)</button>
+        <button class="tab" data-tab="notes">메모장</button>
       </div>
 
       <!-- 전체 탭 -->
@@ -78,6 +81,22 @@
       <div class="tab-content" id="tab-fav">
         <ul class="hymn-list" id="fav-list"></ul>
         <div class="fav-empty" id="fav-empty">보관함이 비어있습니다.<br>곡 옆의 ☆를 눌러 추가하세요.</div>
+      </div>
+
+      <!-- 메모장 탭 -->
+      <div class="tab-content" id="tab-notes">
+        <div class="notes-panel">
+          <div class="notes-toolbar">
+            <button class="notes-btn" id="new-note">+ 새 메모</button>
+            <button class="notes-btn notes-btn-danger" id="delete-note">삭제</button>
+          </div>
+          <ul class="hymn-list" id="notes-list"></ul>
+          <div class="notes-editor" id="notes-editor">
+            <input type="text" id="note-title" placeholder="제목을 입력하세요...">
+            <textarea id="note-content" placeholder="내용을 입력하세요...&#10;찬송가 번호, 설교 내용, 기도 제목 등을 자유롭게 작성할 수 있습니다."></textarea>
+            <button class="notes-save-btn" id="save-note">저장</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
