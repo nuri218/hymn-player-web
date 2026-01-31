@@ -584,12 +584,6 @@ function applyFontScale() {
   if (label) label.textContent = Math.round(fontScale * 100) + '%';
 }
 
-// ===== iOS 감지 =====
-function isIOS() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-}
-
 // ===== UI 이벤트 바인딩 =====
 function setupUI() {
   // 다크모드 토글
@@ -612,14 +606,6 @@ function setupUI() {
     localStorage.setItem('font_scale', fontScale);
     applyFontScale();
   });
-
-  // iOS에서 볼륨바 숨기고 안내 표시
-  if (isIOS()) {
-    const volumeBar = document.querySelector('.volume-bar');
-    if (volumeBar) {
-      volumeBar.innerHTML = '<span style="font-size:calc(12px * var(--font-scale));color:var(--text-secondary);">🔊 음량은 기기 버튼으로 조절하세요</span>';
-    }
-  }
 }
 
 // ===== 실행 =====
